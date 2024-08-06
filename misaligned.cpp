@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
 
-int printColorMap() {
+int getColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
     int i = 0, j = 0;
@@ -13,9 +13,12 @@ int printColorMap() {
     return i * j;
 }
 
+void testColorMap() {
+    assert(getColorMap() == 0);
+}
+
 int main() {
-    int result = printColorMap();
-    assert(result == 25);
+    testColorMap();
     std::cout << "All is well (maybe!)\n";
     return 0;
 }
