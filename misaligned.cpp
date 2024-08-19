@@ -46,13 +46,13 @@ void testColorPairs() {
         lineCount++;
     }
 
-    assert(result == 25 && "Result should be 25");
+    assert(result == 25);
 }
 
 int main() {
     int result = printColorMap();
     testColorPairs();
-    assert(result == 25 && "Result should be 25");
+    assert(result == 25);
     std::cout << "All is well (maybe!)\n";
     return 0;
 }
