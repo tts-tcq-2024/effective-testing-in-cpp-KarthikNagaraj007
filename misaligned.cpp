@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <cassert>
-#include <cstring>
+#include <assert.h>
 
 int printColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
@@ -15,39 +15,41 @@ int printColorMap() {
     return i * j;
 }
 
-void testColorPairs() {
-    // Buffer to capture the output of printColorMap
+void testColorPairs() 
+{
+    // Capture the output of printColorMap
     std::ostringstream oss;
-    std::streambuf* oldCoutStreamBuf = std::cout.rdbuf();
-    std::cout.rdbuf(oss.rdbuf());
+    std::streambuf* oldCoutBuffer = std::cout.rdbuf(oss.rdbuf()); // Redirect cout to oss
+    
+    printColorMap(); // Generate the color map output
 
-    // Generate the color map output
-    int result = printColorMap();
-
-    // Restore the original stdout
-    std::cout.rdbuf(oldCoutStreamBuf);
-
+    std::cout.rdbuf(oldCoutBuffer); // Reset cout to its original state
+    
     // Define expected major and minor colors
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
-
-    // Split the captured output into lines and verify each one
+    
+    // Process captured output line by line
     std::istringstream iss(oss.str());
     std::string line;
     int lineCount = 0;
 
-    while (std::getline(iss, line)) {
-        std::ostringstream expectedOutput;
-        expectedOutput << lineCount << " | " << majorColor[lineCount / 5] << " | " << minorColor[lineCount % 5];
-
-        // Compare the captured line with the expected output
-        assert(line == expectedOutput.str() && "Mismatch in color pair output");
-
+    while (std::getline(iss, line)) 
+    {
+        int expectedPairNumber = lineCount;
+        std::string expectedOutput = std::to_string(expectedPairNumber) + " | " + majorColor[lineCount / 5] + " | " + minorColor[lineCount % 5];
+        
+        // If the captured line does not match the expected output, print an error message
+        if (line != expectedOutput) 
+        {
+            std::cerr << "Test failed at index: " << lineCount << "\nActual: " << line << "\nExpected: " << expectedOutput << "\n";
+            assert(false && "Mismatch in color pair output");
+        }
+        
         lineCount++;
     }
-
-    assert(result == 25);
 }
+
 
 int main() {
     int result = printColorMap();
