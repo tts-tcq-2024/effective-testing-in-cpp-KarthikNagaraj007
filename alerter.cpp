@@ -19,15 +19,22 @@ void alertInCelcius(float farenheit) {
     }
 }
 
-void test_alertInCelcius() {
-    assert(alertInCelsius(400.5) == 1); 
-    assert(alertInCelsius(303.6) == 1);
-    assert(alertInCelsius(404.8) == 1);
+void testAlertInCelcius() {
+    alertFailureCount = 0;
+    
+    alertInCelcius(400.5);
+    assert(alertFailureCount == 1);
+
+    alertInCelcius(303.6);
+    assert(alertFailureCount == 2);
+
+    alertInCelcius(404.8);
+    assert(alertFailureCount == 3);
 
 }
 
 int main() {
-    test_alertInCelcius();
+    testAlertInCelcius();
     std::cout << alertFailureCount << " alerts failed.\n";
     std::cout << "All is well (maybe!)\n";
     return 0;
