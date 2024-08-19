@@ -1,7 +1,6 @@
 #include <iostream>
-#include <sstream>
-#include <cassert>
 #include <assert.h>
+#include <sstream>
 
 int printColorMap() {
     const char* majorColor[] = {"White", "Red", "Black", "Yellow", "Violet"};
@@ -9,7 +8,7 @@ int printColorMap() {
     int i = 0, j = 0;
     for(i = 0; i < 5; i++) {
         for(j = 0; j < 5; j++) {
-            std::cout << i * 5 + j << " | " << majorColor[i] << " | " << minorColor[j] << std::endl;
+            std::cout << i * 5 + j << " | " << majorColor[i] << " | " << minorColor[i] << "\n";
         }
     }
     return i * j;
@@ -18,8 +17,8 @@ int printColorMap() {
 void testColorPairs() 
 {
     // Capture the output of printColorMap
-    std::ostringstream oss;
-    std::streambuf* oldCoutBuffer = std::cout.rdbuf(oss.rdbuf()); // Redirect cout to oss
+    std::ostringstream capturedOutput;
+    std::streambuf* oldCoutBuffer = std::cout.rdbuf(capturedOutput.rdbuf()); // Redirect cout to capturedOutput
     
     printColorMap(); // Generate the color map output
 
@@ -30,7 +29,7 @@ void testColorPairs()
     const char* minorColor[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
     
     // Process captured output line by line
-    std::istringstream iss(oss.str());
+    std::istringstream iss(capturedOutput.str());
     std::string line;
     int lineCount = 0;
 
@@ -49,7 +48,6 @@ void testColorPairs()
         lineCount++;
     }
 }
-
 
 int main() {
     int result = printColorMap();
